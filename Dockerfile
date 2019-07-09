@@ -1,5 +1,5 @@
 FROM alpine:3.10
-RUN echo "**** install Python ****" && \
+RUN echo "**** install Python3 ****" && \
     apk add --no-cache python3 python3-dev py3-zmq build-base && \
     if [ ! -e /usr/bin/python ]; then ln -sf python3 /usr/bin/python ; fi && \
     echo "**** install pip ****" && \
@@ -13,6 +13,9 @@ RUN echo "**** install Python ****" && \
     mkdir /locust
 
 WORKDIR /locust
+ADD run-tests.sh /locust
+
+ONBUILD ADD . /locust
 ONBUILD RUN test -f requirements.txt && pip install -r requirements.txt; exit 0
 
 EXPOSE 8089 5557 5558
