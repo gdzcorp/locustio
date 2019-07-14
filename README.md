@@ -7,7 +7,7 @@ Base on https://github.com/christian-blades-cb/locustio-docker
 Assuming you have a `locustfile.py` in the root of your project, make a Dockerfile like this:
 
 ```dockerfile
-FROM gdziwoki/locustio
+FROM gdzcorp/locustio
 ```
 
 Then build and run the docker image:
@@ -24,7 +24,7 @@ Any requirements you have listed in your `requirements.txt` will be installed du
 Alternatively, if you don't have a `requirements.txt` file, you can run a temporary, anonymous container by sharing your `locustfile.py` into it. Assuming you have a `locustfile.py` file in the current folder you're in, you can run with this command:
 
 ```
-docker run --rm -v `pwd`:/locust -e TARGET_HOST=http://mysit -p 8089:8089 gdziwoki/locustio
+docker run --rm -v `pwd`:/locust -e TARGET_HOST=http://mysit -p 8089:8089 gdzcorp/locustio
 ```
 
 You will also be able to access the web interface at http://localhost:8089
