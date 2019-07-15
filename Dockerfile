@@ -13,10 +13,10 @@ RUN echo "**** install Python3 ****" && \
     mkdir /locust
 
 WORKDIR /locust
-ADD run-tests.sh /locust
+ADD run-tests.sh /bin
 
 ONBUILD ADD . /locust
 ONBUILD RUN test -f requirements.txt && pip install -r requirements.txt; exit 0
 
 EXPOSE 8089 5557 5558
-ENTRYPOINT [ "/locust/run-tests.sh" ]
+ENTRYPOINT [ "/bin/run-tests.sh" ]
