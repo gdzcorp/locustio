@@ -24,15 +24,50 @@ Any requirements you have listed in your `requirements.txt` will be installed du
 Alternatively, if you don't have a `requirements.txt` file, you can run a temporary, anonymous container by sharing your `locustfile.py` into it. Assuming you have a `locustfile.py` file in the current folder you're in, you can run with this command:
 
 ```
-docker run --rm -v `pwd`:/locust -e TARGET_HOST=http://mysit -p 8089:8089 gdzcorp/locustio
+docker run --rm -v `pwd`:/locust -e TARGET_HOST=http://mysite -p 8089:8089 gdzcorp/locustio
 ```
 
 You will also be able to access the web interface at http://localhost:8089
-## Master/Slave
+## Master/Worker
 
 If you want to run in master/slave mode, specify a different file to run, etc, you can pass the appropriate vars to the container.
 
 ```shell
 $ docker run -d -e TARGET_HOST=http://mysite  -e LOCUST_MODE=master --name master -P mylocust
-$ docker run -d -e TARGET_HOST=http://mysite  -e LOCUST_MODE=slave -e LOCUST_MASTER=master --name slave -P mylocust
+$ docker run -d -e TARGET_HOST=http://mysite  -e LOCUST_MODE=slave -e LOCUST_MASTER=master --name worker -P mylocust
+```
+### docker-compose
+
+To use this container with your docker-compose setup as standalone:
+
+```
+version: '3.5'
+services:
+  locustio:
+    image: "gdzcorp/locustio"
+    environment:
+        TARGET_HOST: "http://mysite"
+    ports:
+      - "8089:8089"
+```
+
+or with master/worker setup: 
+```
+version: '3.5'
+services:
+  locustio-master:
+    image: "mylocust"
+    environment:
+        TARGET_HOST: "http://mysite"
+        LOCUST_MODE: "master"
+    ports:
+      - "8089:8089"
+  locustio-worker:
+    image: "mylocust"
+    environment:
+        TARGET_HOST: "http://mysite"
+        LOCUST_MODE: "worker"
+        LOCUST_MASTER: "locustio-master"
+    ports:
+      - "8089:8089"
 ```
