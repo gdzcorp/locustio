@@ -1,6 +1,6 @@
 FROM alpine:3.10
 RUN echo "**** install Python3 ****" && \
-    apk add --no-cache python3 python3-dev py3-zmq build-base && \
+    apk add --no-cache python3 python3-dev py3-zmq build-base gcc g++ musl-dev linux-headers zeromq-dev libffi-dev && \
     if [ ! -e /usr/bin/python ]; then ln -sf python3 /usr/bin/python ; fi && \
     echo "**** install pip ****" && \
     python3 -m ensurepip && \
