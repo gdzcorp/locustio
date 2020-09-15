@@ -8,7 +8,7 @@ RUN echo "**** install Python3 ****" && \
     pip3 install --no-cache --upgrade pip setuptools wheel && \
     if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
     echo "**** install locustio ****" && \
-    pip install locustio pyzmq && \
+    pip install locust pyzmq && \
     rm -rf /var/cache/apk/* && \
     mkdir /locust
 
